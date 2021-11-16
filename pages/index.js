@@ -10,19 +10,54 @@ import {
 	Td,
 	InputGroup,
 	InputLeftElement,
+	Flex,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { API } from 'aws-amplify'
 
 export default function Home() {
-	const [phoneData, setPhoneData] = useState([
-		{ number: '+15555555555', alias: 'Dad' },
-		{ number: '+14444444444', alias: 'Sister' },
-	])
+	const [phoneData, setPhoneData] = useState([])
+	const [budget, setBudget] = useState('')
+
+	useEffect(() => {
+		//list sandbox numbers
+		const fetchNumberData = async () => {
+			const verifiedNumbers = await API.get(
+				'secrettextapi',
+				'/secret-text/list-numbers'
+			).catch((e) => console(e))
+
+			console.log(verifiedNumbers)
+			setPhoneData(verifiedNumbers)
+		}
+
+		fetchNumberData()
+	}, [])
+
+	const handleAliasChange = async (value, index) => {
+		const updatedPhoneData = phoneData.map((phoneItem, phoneItemIndex) => {
+			if (index === phoneItemIndex) {
+				phoneItem.alias = value
+			}
+			return phoneItem
+		})
+
+		setPhoneData(updatedPhoneData)
+	}
+
+	const handleSubmissionClick = async () => {
+		await API.post('secrettextapi', '/secret-text/publish-numbers', {
+			body: {
+				budget,
+				numberData: phoneData,
+			},
+		})
+	}
 
 	return (
-		<Box>
-			<Box>
-				<InputGroup>
+		<Box mt="16">
+			<Flex justifyContent="center">
+				<InputGroup w="20vw">
 					<InputLeftElement
 						pointerEvents="none"
 						color="gray.600"
@@ -30,12 +65,16 @@ export default function Home() {
 						// eslint-disable-next-line react/no-children-prop
 						children="$"
 					/>
-					<Input placeholder="Enter budget amount" />
+					<Input
+						placeholder="Enter budget amount"
+						value={budget}
+						onChange={(e) => setBudget(e.target.value)}
+					/>
 				</InputGroup>
-			</Box>
+			</Flex>
 
-			<Box>
-				<Table variant="simple">
+			<Flex justifyContent="center" mt="8%">
+				<Table variant="simple" w="80vw">
 					<Thead>
 						<Tr>
 							<Th>Verified Phone Number</Th>
@@ -43,20 +82,29 @@ export default function Home() {
 						</Tr>
 					</Thead>
 					<Tbody>
-						{phoneData.map((phoneItem) => (
+						{phoneData.map((phoneItem, index) => (
 							<Tr key={phoneItem.number}>
 								<Td>{phoneItem.number}</Td>
-								<Td>{phoneItem.alias}</Td>
+								<Td>
+									<Input
+										value={phoneItem.alias}
+										onChange={(e) => handleAliasChange(e.target.value, index)}
+									/>
+								</Td>
 							</Tr>
 						))}
 					</Tbody>
 				</Table>
-			</Box>
-			<Box>
-				<Button colorScheme="teal" variant="solid">
+			</Flex>
+			<Flex mt="4%" mr="8%" justifyContent="flex-end">
+				<Button
+					colorScheme="teal"
+					variant="solid"
+					onClick={handleSubmissionClick}
+				>
 					Randomize and Send!
 				</Button>
-			</Box>
+			</Flex>
 		</Box>
 	)
 }

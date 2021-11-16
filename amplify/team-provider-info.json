@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-secrettextsender-dev-02931-authRole",
+      "UnauthRoleArn": "arn:aws:iam::521776702104:role/amplify-secrettextsender-dev-02931-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::521776702104:role/amplify-secrettextsender-dev-02931-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-secrettextsender-dev-02931-deployment",
+      "UnauthRoleName": "amplify-secrettextsender-dev-02931-unauthRole",
+      "StackName": "amplify-secrettextsender-dev-02931",
+      "StackId": "arn:aws:cloudformation:us-east-1:521776702104:stack/amplify-secrettextsender-dev-02931/90c3cfb0-46a6-11ec-96f4-0a409f56bb83",
+      "AmplifyAppId": "d38xge9rdrxnuh"
+    },
+    "categories": {
+      "function": {
+        "secrettextfunc": {
+          "deploymentBucketName": "amplify-secrettextsender-dev-02931-deployment",
+          "s3Key": "amplify-builds/secrettextfunc-6b353345396e35686d44-build.zip"
+        }
+      }
+    }
+  }
+}

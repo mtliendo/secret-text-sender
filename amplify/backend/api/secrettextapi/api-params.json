@@ -1,0 +1,35 @@
+{
+  "paths": [
+    {
+      "name": "/secret-text",
+      "lambdaFunction": "secrettextfunc",
+      "privacy": {
+        "open": true
+      },
+      "policyResourceName": "/secret-text"
+    }
+  ],
+  "resourceName": "secrettextapi",
+  "apiName": "secrettextapi",
+  "functionArns": [
+    {
+      "lambdaFunction": "secrettextfunc"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-secrettextsender-dev-02931-authRole",
+    "unAuthRoleName": "amplify-secrettextsender-dev-02931-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "secrettextfunc",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

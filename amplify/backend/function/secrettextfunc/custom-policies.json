@@ -1,0 +1,10 @@
+[
+	{
+		"Action": ["SNS:ListSMSSandboxPhoneNumbers"],
+		"Resource": ["arn:aws:sns:*:*:*"]
+	},
+	{
+		"Action": ["SNS:Publish", "SNS:Subscribe"],
+		"Resource": ["arn:aws:sns:*:*:secrettextsender-${env}"]
+	}
+]
