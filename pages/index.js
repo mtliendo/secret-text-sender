@@ -22,10 +22,10 @@ export default function Home() {
 	useEffect(() => {
 		//list sandbox numbers
 		const fetchNumberData = async () => {
-			const verifiedNumbers = await API.get(
-				'secrettextapi',
-				'/secret-text/list-numbers'
-			).catch((e) => console(e))
+			const verifiedNumbers = [
+				{ number: '+15555555555', alias: 'Michael' },
+				{ number: '+14444444444', alias: 'Rene' },
+			]
 
 			console.log(verifiedNumbers)
 			setPhoneData(verifiedNumbers)
@@ -46,12 +46,8 @@ export default function Home() {
 	}
 
 	const handleSubmissionClick = async () => {
-		await API.post('secrettextapi', '/secret-text/publish-numbers', {
-			body: {
-				budget,
-				numberData: phoneData,
-			},
-		})
+		// post budget and phone data to the 🌥️
+		console.log(phoneData)
 	}
 
 	return (
